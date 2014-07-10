@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Zoomdata Javascript Client</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-size: 12px;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        #visualization {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/zoomdata.js/1.4.0/zoomdata.min.js"></script>
+    <script type="text/javascript">
+
+    $(function () {
+        var zoomdataClient = new ZoomdataClient({
+            apiKey: '53a0d9ffe4b038d2b3933ea2',
+            host: 'dev.zoomdata.com/zoomdata',
+            secure: true
+        });
+
+        zoomdataClient.visualize({
+            visualization: "Horizontal Bars",
+            source: "Real Time Sales",
+            element: $('#visualization').get(0)
+        })
+        .progress(function (message) {
+            console.log('loading...', message);
+        })
+        .done(function () {
+            console.log('Finished loading successfully.');
+        })
+        .fail(function (xhr, response) {
+            var message = typeof xhr == 'string' ? xhr : null;
+            console.log(message || (response + ': ' + xhr.statusText));
+        });
+    });
+
+    </script>
+
+    <div id="visualization"></div>
+
+</body>
+</html>
