@@ -13,36 +13,36 @@
             overflow: hidden;
             font-family: sans-serif;
         }
-
-        #visualization {
-            width: 100%;
-            height: 100%;
-            margin: auto;
-            position: relative;
-        }
     </style>
 </head>
 <body>
 
+    <!-- ZoomdataClient Dependencies -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
+    <!-- ZoomdataClient Dependencies -->
 
     <script src="//cdn.jsdelivr.net/zoomdata.js/1.4.0/zoomdata.min.js"></script>
     <script type="text/javascript">
 
     $(function () {
+        /*
+            Instantiate a single ZoomdataClient object.
+        */
         var zoomdataClient = new ZoomdataClient({
-            apiKey: '53a0d9ffe4b038d2b3933ea2',
-            host: 'dev.zoomdata.com/zoomdata',
-            secure: true
+            apiKey: 'YOUR API KEY',
+            host: 'localhost:8080/zoomdata',
+            secure: false
         });
 
+        /*
+            Instantiate each visualization using the visualize function.
+        */
         zoomdataClient.visualize({
-            visualization: "Horizontal Bars",
+            visualization: "Vertical Bars",
             source: "Real Time Sales",
             element: $('#visualization').get(0)
         })
@@ -56,11 +56,42 @@
             var message = typeof xhr == 'string' ? xhr : null;
             console.log(message || (response + ': ' + xhr.statusText));
         });
+
+        /*
+            An example of a applying a filter to a visualization.
+        */
+        $('#gender-filter').change(function() {
+            var gender = $( this ).val(),
+                visualization = _.findWhere(zoomdataClient.visualizations, {name:'Vertical Bars'});
+
+            var filter = {
+                operation: 'IN',
+                path: 'usergender'
+            };
+
+            if(gender !== 'All') {
+                filter['value'] = [gender];
+
+                visualization.controller.state.setFilter(filter);
+            } else {
+                visualization.controller.state.removeFilter(filter);
+            }
+        });
     });
 
     </script>
 
-    <div id="visualization"></div>
+    <!-- Standard HTML Dropdown
+    These values can be dynamically loaded using the Zoomdata REST API
+    e.g.: /service/sources/{id}/attributes/{name}/values -->
+    <select id="gender-filter">
+        <option>All</option>
+        <option>Male</option>
+        <option>Female</option>
+    </select>
+
+    <!-- The HTML Element the visualization is attached to. -->
+    <div id="visualization" style="width: 70%; height: 45%; margin: auto; position: relative;"></div>
 
 </body>
 </html>
