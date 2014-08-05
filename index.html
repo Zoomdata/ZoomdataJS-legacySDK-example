@@ -25,7 +25,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
     <!-- ZoomdataClient Dependencies -->
 
-    <script src="//cdn.jsdelivr.net/zoomdata.js/1.4.0/zoomdata.min.js"></script>
+    <script src="zoomdata.min.js"></script>
     <script type="text/javascript">
 
     $(function () {
@@ -33,16 +33,16 @@
             Instantiate a single ZoomdataClient object.
         */
         var zoomdataClient = new ZoomdataClient({
-            apiKey: 'YOUR API KEY',
-            host: 'localhost:8080/zoomdata',
-            secure: false
+            apiKey: '53e141d9e4b062afa8ab2746',
+            host: 'dev.zoomdata.com/zoomdata',
+            secure: true
         });
 
         /*
             Instantiate each visualization using the visualize function.
         */
         zoomdataClient.visualize({
-            visualization: "Vertical Bars",
+            visualization: "Total Count Text",
             source: "Real Time Sales",
             element: $('#visualization').get(0)
         })
@@ -62,7 +62,7 @@
         */
         $('#gender-filter').change(function() {
             var gender = $( this ).val(),
-                visualization = _.findWhere(zoomdataClient.visualizations, {name:'Vertical Bars'});
+                visualization = _.findWhere(zoomdataClient.visualizations, {name:'Total Count Text'});
 
             var filter = {
                 operation: 'IN',
@@ -91,7 +91,7 @@
     </select>
 
     <!-- The HTML Element the visualization is attached to. -->
-    <div id="visualization" style="width: 70%; height: 45%; margin: auto; position: relative;"></div>
+    This is an example sentence. There are currently a total of <span id="visualization"></span> records.
 
 </body>
 </html>
