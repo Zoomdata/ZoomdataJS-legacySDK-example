@@ -27,6 +27,8 @@
     <script type="text/javascript">
 
     $(function () {
+        var visualization;
+
         /*
             Instantiate a single ZoomdataClient object.
         */
@@ -40,15 +42,17 @@
             Instantiate each visualization using the visualize function.
         */
         zoomdataClient.visualize({
-            visualization: "Vertical Bars",
+            visualization: "Bars: Vertical",
             source: "Real Time Sales",
             element: $('#visualization').get(0)
         })
         .progress(function (message) {
             console.log('loading...', message);
         })
-        .done(function () {
+        .done(function (vis) {
             console.log('Finished loading successfully.');
+
+            visualization = vis;
         })
         .fail(function (xhr, response) {
             var message = typeof xhr == 'string' ? xhr : null;
@@ -59,8 +63,7 @@
             An example of a applying a filter to a visualization.
         */
         $('#gender-filter').change(function() {
-            var gender = $( this ).val(),
-                visualization = _.findWhere(zoomdataClient.visualizations, {name:'Vertical Bars'});
+            var gender = $( this ).val();
 
             var filter = {
                 operation: 'IN',
