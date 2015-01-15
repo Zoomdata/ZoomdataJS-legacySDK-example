@@ -5,6 +5,8 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/zoomdata.js/1.5.0/zoomdata.css">
+
     <style type="text/css">
         html, body {
             width: 100%;
@@ -19,22 +21,20 @@
 
     <!-- ZoomdataClient Dependencies -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
     <!-- ZoomdataClient Dependencies -->
 
-    <script src="//cdn.jsdelivr.net/zoomdata.js/1.4.4/zoomdata.min.js"></script>
+    <script src="//cdn.jsdelivr.net/zoomdata.js/1.5.0/zoomdata.min.js"></script>
     <script type="text/javascript">
 
     $(function () {
+        var visualization;
+
         /*
             Instantiate a single ZoomdataClient object.
         */
         var zoomdataClient = new ZoomdataClient({
             apiKey: '53cdeb07e4b00405fce08592',
-            host: 'live.zoomdata.com:8443/zoomdata',
+            host: '54.172.54.160/zoomdata',
             secure: true
         });
 
@@ -42,15 +42,17 @@
             Instantiate each visualization using the visualize function.
         */
         zoomdataClient.visualize({
-            visualization: "Vertical Bars",
+            visualization: "Bars: Vertical",
             source: "Real Time Sales",
             element: $('#visualization').get(0)
         })
         .progress(function (message) {
             console.log('loading...', message);
         })
-        .done(function () {
+        .done(function (vis) {
             console.log('Finished loading successfully.');
+
+            visualization = vis;
         })
         .fail(function (xhr, response) {
             var message = typeof xhr == 'string' ? xhr : null;
@@ -61,8 +63,7 @@
             An example of a applying a filter to a visualization.
         */
         $('#gender-filter').change(function() {
-            var gender = $( this ).val(),
-                visualization = _.findWhere(zoomdataClient.visualizations, {name:'Vertical Bars'});
+            var gender = $( this ).val();
 
             var filter = {
                 operation: 'IN',
