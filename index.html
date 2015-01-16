@@ -53,6 +53,12 @@
             console.log('Finished loading successfully.');
 
             visualization = vis;
+
+            vis.controller
+                .elementsManager
+                .on('interaction', function(interactiveElement) {
+                    console.log(interactiveElement);
+                });
         })
         .fail(function (xhr, response) {
             var message = typeof xhr == 'string' ? xhr : null;
