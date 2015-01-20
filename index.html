@@ -23,7 +23,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- ZoomdataClient Dependencies -->
 
-    <script src="//cdn.jsdelivr.net/zoomdata.js/1.5.0/zoomdata.min.js"></script>
+    <script src="zoomdata.min.js"></script>
     <script type="text/javascript">
 
     $(function () {
@@ -34,7 +34,7 @@
         */
         var zoomdataClient = new ZoomdataClient({
             apiKey: '53cdeb07e4b00405fce08592',
-            host: '54.172.54.160/zoomdata',
+            host: 'live.zoomdata.com/zoomdata',
             secure: true
         });
 
@@ -57,12 +57,28 @@
             vis.controller
                 .elementsManager
                 .on('interaction', function(interactiveElement) {
-                    console.log(interactiveElement);
+                    console.log('Vertical Bar Chart Interaction Event');
                 });
         })
         .fail(function (xhr, response) {
             var message = typeof xhr == 'string' ? xhr : null;
             console.log(message || (response + ': ' + xhr.statusText));
+        });
+
+
+        zoomdataClient.visualize({
+            visualization: "Bars: Horizontal",
+            source: "Real Time Sales",
+            element: $('#visualization').get(0)
+        })
+        .done(function (vis) {
+            console.log('Finished loading successfully.');
+
+            vis.controller
+                .elementsManager
+                .on('interaction', function(interactiveElement) {
+                    console.log('Horizontal Bar Chart Interaction Event');
+                });
         });
 
         /*
