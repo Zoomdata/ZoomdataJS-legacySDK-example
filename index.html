@@ -33,23 +33,23 @@
             Instantiate a single ZoomdataClient object.
         */
         var zoomdataClient = new ZoomdataClient({
-            apiKey: 'YOUR API KEY',
-            host: 'localhost:8080/zoomdata',
-            secure: false
+            apiKey: 'YOUR API KEY',                     // substitute your API key inside the ' ' marks
+            host: 'localhost:8080/zoomdata',            // substitute with the URL of your Zoomdata server
+            secure: false                               // true for an HTTPS protocol; false for HTTP protocol
         });
 
         /*
             Instantiate each visualization using the visualize function.
         */
-        zoomdataClient.visualize({
-            visualization: "Bars: Vertical",
-            source: "Real Time Sales",
-            element: $('#visualization').get(0)
+        zoomdataClient.visualize({                      // visualize the 'Bars: Vertical' visualization in the
+            visualization: "Bars: Vertical",            // 'Real Time Sales' visualization source.
+            source: "Real Time Sales",                  // visualization will be attached to the HTML node
+            element: $('#visualization').get(0)         // that has id="visualization"
         })
-        .progress(function (message) {
+        .progress(function (message) {                  // progress message method
             console.log('loading...', message);
         })
-        .done(function (vis) {
+        .done(function (vis) {                          //upon completion
             console.log('Finished loading successfully.');
 
             visualization = vis;
@@ -60,16 +60,16 @@
                     console.log(interactiveElement);
                 });
         })
-        .fail(function (xhr, response) {
-            var message = typeof xhr == 'string' ? xhr : null;
-            console.log(message || (response + ': ' + xhr.statusText));
+        .fail(function (xhr, response) {                                //in the event of a failure
+            var message = typeof xhr == 'string' ? xhr : null;          //if xhr is a string, then message=xhr, otherwise it is null
+            console.log(message || (response + ': ' + xhr.statusText)); //log the error message
         });
 
         /*
             An example of a applying a filter to a visualization.
         */
-        $('#gender-filter').change(function() {
-            var gender = $( this ).val();
+        $('#gender-filter').change(function() {         //applies to HTML elements that have id="gender-filter"
+            var gender = $( this ).val();               //gender = value of the element's current selection
 
             var filter = {
                 operation: 'IN',
@@ -79,16 +79,17 @@
             if(gender !== 'All') {
                 filter['value'] = [gender];
 
-                visualization.controller.state.setFilter(filter);
+                visualization.controller.state.setFilter(filter);       //set filter setting to the gender selection
             } else {
-                visualization.controller.state.removeFilter(filter);
+                visualization.controller.state.removeFilter(filter);    //if (gender=='All')
             }
         });
     });
 
     </script>
 
-    <!-- Standard HTML Dropdown
+    <!-- Standard HTML Dropdown. Because it has id="gender-filter" it will be
+    used as the gender filter. See above.
     These values can be dynamically loaded using the Zoomdata REST API
     e.g.: /service/sources/{id}/attributes/{name}/values -->
     <select id="gender-filter">
@@ -97,7 +98,7 @@
         <option>Female</option>
     </select>
 
-    <!-- The HTML Element the visualization is attached to. -->
+    <!-- The HTML node has id="visualization" and therefore will have the visualization attached. See above. -->
     <div id="visualization" style="width: 70%; height: 45%; margin: auto; position: relative;"></div>
 
 </body>
