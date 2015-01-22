@@ -55,7 +55,6 @@
             visualization = vis;
 
             vis.controller
-                .elementsManager
                 .on('interaction', function(interactiveElement) {
                     console.log('Vertical Bar Chart Interaction Event');
                 });
@@ -75,7 +74,6 @@
             console.log('Finished loading successfully.');
 
             vis.controller
-                .elementsManager
                 .on('interaction', function(interactiveElement) {
                     console.log('Horizontal Bar Chart Interaction Event');
                 });
