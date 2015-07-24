@@ -1,0 +1,4 @@
+Please copy the latest version of the ZoomdataJS Javascript client library to this subfolder.
+
+You can find the latest from the ZoomdataJS Github project:
+https://github.com/Zoomdata/ZoomdataJS
