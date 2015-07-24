@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Zoomdata Javascript Client Simple-Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- Include the ZoomdataJS css, needs to be copied into the zoomdata subfolder for this example -->
+    <link rel="stylesheet" type="text/css" href="zoomdataJS/zoomdata.css">
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<!-- include jQuery from CDN -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- include the Zoomdata JS library, assumed to be in zoomdata/ subfolder for this example -->
+<script src="zoomdataJS/zoomdata.min.js"></script>
+
+<!-- Sample -->
+<script type="text/javascript">
+
+    $(function () {
+        'use strict';
+
+        /*
+         * array of rendered visualizations for reference in filtering scenario.
+         * */
+        var visualizationObjects = [];
+
+        /*
+         * Instantiate a single ZoomdataClient object.
+         * */
+        var zoomdataClient = new ZoomdataClient({
+            apiKey: 'YOUR API KEY',                     // substitute your API key inside the ' ' marks
+            host: 'localhost:8080/zoomdata',            // substitute with the URL of your Zoomdata server
+            secure: false                               // true for an HTTPS protocol; false for HTTP protocol
+        });
+
+        /*
+         * Define a list of visualization types to be rendered on the page, some possible
+         * chart types are:
+         * 'Bars', 'Bars: Multiple Metrics', 'Donut','Floating Bubbles',
+         * 'Heat Map', 'KPI', 'Line & Bars Trend', 'Line Trend: Attribute Values',
+         * 'Line Trend: Multiple Metrics', 'Map: US Regions', 'Packed Bubbles',
+         * 'Pie', 'Scatter Plot', 'Tree Map', 'Word Cloud'];
+         * Refer to your Zoomdata instance and to support.zoomdata.com for full list of available chart types
+         * */
+        var visNames = ['Bars',  'Donut', 'Floating Bubbles', 'Heat Map', 'KPI', 'Line & Bars Trend', 'Map: US Regions'];
+
+        /*
+         *
+         * Iterate through the list of visualizations and place each on the page within a <div>.
+         * */
+        visNames.forEach(function(name) {
+            zoomdataClient.visualize({
+                visualization: name,                    // name the visualization based on the chart name
+                source: "Real Time Sales",              // create visualizations associated with the "Real Time Sales" datasource
+                element: $('#visualizations').get(0)    // add it to the <div> with id="visualizations"
+            })
+                    .progress(function (message) {
+                        console.log('loading...', message);
+                    })
+                    .done(function (vis) {
+                        console.log('Finished loading successfully.');
+
+                        // Remember the object for later use in filtering
+                        visualizationObjects.push(vis);
+
+                        // attach an event handler to the visualization, for now just
+                        vis.controller
+                                .on('interaction', function(data) {
+                                    //
+                                    // Nothing fancy here, just print out the fact we got an event.
+                                    //
+                                    // One could respond to event here to filter or call some other
+                                    // portion of the page, for now we just log it.
+                                    //
+                                    console.log(data);
+                                });
+                    })
+                    .fail(function (xhr, response) {
+                        var message = typeof xhr == 'string' ? xhr : null;
+                        console.log(message || (response + ': ' + xhr.statusText));
+                    });
+        });
+
+        /*
+         * An example of a applying a filter to a visualization.
+         **/
+        $('#gender-filter').change(function() {
+            var gender = $( this ).val();
+
+            var filter = {
+                operation: 'IN',
+                path: 'usergender'
+            };
+
+            if(gender !== 'All') {
+                filter['value'] = [gender];
+
+                visualizationObjects.forEach(function(item) {
+                    item.controller.state.setFilter(filter);
+                });
+
+            } else {
+
+                visualizationObjects.forEach(function(item) {
+                    item.controller.state.removeFilter(filter);
+                });
+
+            }
+        });
+
+    });
+
+</script>
+
+<!-- Create a Standard HTML Dropdown, will be used to demonstrate filtering -->
+<select id="gender-filter">
+    <option>All</option>
+    <option>Male</option>
+    <option>Female</option>
+</select>
+
+<!-- The HTML Element the visualizations will be attached to. -->
+<div id="visualizations" style="width: 70%; height: 45%; margin: auto; position: relative;">
+</div>
+
+</body>
+</html>
