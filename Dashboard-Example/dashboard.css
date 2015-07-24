@@ -1,0 +1,67 @@
+/*
+ * dashboard.css - CSS for ZoomdataJS-example project demonstrating a simple dashboard using ZoomdataJS Client Javascript Library
+ *
+ */
+        body {
+            margin:5%;
+			width: 90%;
+            height: 90%;
+            font-size: 12px;
+            overflow: hidden;
+            font-family: sans-serif;
+			background-image:url(images/background.jpg);
+			background-position:top;
+        }
+
+/* ------------------- top left visualization -------------------- */
+
+		#viztopleft {
+            /* position and style of panel body within the whole panel */
+			padding: 10px;
+			position:absolute;
+            width: 100%;
+            height: 90%;
+        }
+
+		#viztopleftpanel {
+			/* position and style of the whole panel */
+			width: 25%;
+			height: 35%;
+			position:absolute;
+            left: 20%;  /* indent 20% rightward from the left edge of the page */
+		}
+
+/* ------------------- top right visualization -------------------- */
+
+        #viztop {
+            /* position and style of panel body within the whole panel */
+            position: absolute;
+            height: 80%;
+            width: 100%;
+        }
+
+		#viztoppanel {
+            /* position and style of the whole panel */
+			width: 45%;
+			height: 35%;
+			position:absolute;
+			left:50%;    /* indent 50% rightward from the left edge of the page */
+		}
+
+/* ------------------- bottom visualization -------------------- */
+
+		#vizbot {
+			/* position and style of panel body within the whole panel */
+			padding: 10px;
+			position:absolute;
+            width: 100%;
+            height: 90%;
+        }
+
+		#vizbotpanel {
+			/* position and style of the whole panel */
+			width: 90%;
+			height: 40%;
+			position:absolute;
+			top:50%;   /* start 50% of the way down from the top of the whole page */
+		}

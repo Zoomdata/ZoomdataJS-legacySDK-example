@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+ <title>Real Time Sales Dashboard Example</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!-- Bootstrap latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- ZoomdataJS CSS file, needs to be copied into the zoomdata subfolder for this example -->
+    <link rel="stylesheet" type="text/css" href="zoomdataJS/zoomdata.css">
+
+    <!-- Dashboard Sample's CSS -->
+    <link href="dashboard.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<!---------------------------->
+<!-- Dependencies ------------>
+<!---------------------------->
+
+<!-- jQuery and Bootstrap-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!--
+    Zoomdata Javascript client library, assumed to be in the zoomdata/ subfolder for this example
+    current version of library can be retrieved from Github at https://github.com/Zoomdata/ZoomdataJS
+-->
+<script src="zoomdataJS/zoomdata.min.js"></script>
+
+
+<!---------------------------->
+<!-- Render visualizations --->
+<!---------------------------->
+
+<script src="visualizations.js"></script>
+
+<!------------------------------------->
+<!-- Position master filter checkbox -->
+<!------------------------------------->
+
+<div id="checklist" class="form-group" style="line-height:2; position:absolute; float:left;">
+<label>Product Group</label>
+<div class="checkbox"><label><input checked type="checkbox" value="" name="Electronics" id="Electronics">Electronics</label></div>
+<div class="checkbox"><label><input checked type="checkbox" value="" name="Books" id="Books">Books</label></div>
+<div class="checkbox"><label><input checked type="checkbox" value="" name="Jewelry" id="Jewelry">Jewelry</label></div>
+<div class="checkbox"><label><input checked type="checkbox" value="" name="Men" id="Men">Men</label></div>
+<div class="checkbox"><label><input checked type="checkbox" value="" name="Women" id="Women">Women</label></div>
+
+<button type="button" class="btn btn-primary btn-xs" id="resetbutton" style="float:left; position:absolute; margin-left:15px;">Reset All</button>
+
+</div>
+
+
+<!------------------------------------->
+<!-- Position global reset button ----->
+<!------------------------------------->
+
+
+<!--------------------------------------------->
+<!-- Position top visualization --------------->
+<!--------------------------------------------->
+
+<div class="panel panel-default" id="viztoppanel">
+    <div class="panel-heading" id="viztopheading">Sales volume by group and category</div>
+    <div class="panel-body" id="viztop"></div>
+</div>
+
+
+<!--------------------------------------------->
+<!-- Position top left visualization ------->
+<!--------------------------------------------->
+
+<div class="panel panel-default" id="viztopleftpanel">
+    <div class="panel-heading" id="viztopleftheading">Sales volume by group</div>
+    <div class="panel-body" id="viztopleft"></div>
+</div>
+
+<!--------------------------------------------->
+<!-- Position bottom visualization ------>
+<!--------------------------------------------->
+
+<div class="panel panel-default" id="vizbotpanel">
+    <div class="panel-heading" id="vizbotheading">Sales by date</div>
+    <div class="panel-body" id="vizbot"></div>
+</div>
+
+</body>
+</html>
