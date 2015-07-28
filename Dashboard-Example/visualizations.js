@@ -97,12 +97,12 @@ $(function() {
             visualizationTop = vis;
             vis.controller.on('interaction', function(interactiveElement) { // create an event handler that detects clicks ('interaction') and responds.
                 console.log(interactiveElement);
-                var group = interactiveElement.group;                     // Here, identify which bar (product group) was clicked.
+                var group = interactiveElement.group;                     // Here, identify which bar (user gender) was clicked.
                 console.log('clicked ' + group);
                 var filter = {                                          // use the group as the basis of a new filter
                     operation: 'IN',                                    // includes
-                    path: 'group',                                       // the category(ies) - in this particular data source, 'product group' is referred to variously.
-                    value: [group]                                      // that match the clicked bar (product group)
+                    path: 'usergender',                                 // the category(ies) - in this particular data source, 'usergender' is referred to variously.
+                    value: [group]                                      // that match the clicked bar (gender)
                 };
                 visualizationBottom.controller.state.setFilter(filter); // set the filter for bottom right visualization using the filter
                 console.log(visualizationBottom.controller);
